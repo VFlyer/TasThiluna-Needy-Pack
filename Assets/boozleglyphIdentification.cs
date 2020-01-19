@@ -8,8 +8,8 @@ using rnd = UnityEngine.Random;
 
 public class boozleglyphIdentification : MonoBehaviour
 {
-    public new KMAudio audio;
-    public KMBombInfo bomb;
+	public new KMAudio audio;
+	public KMBombInfo bomb;
 	public KMNeedyModule module;
 
 	public KMSelectable submit;
@@ -35,9 +35,9 @@ public class boozleglyphIdentification : MonoBehaviour
 	private static readonly string[] setNumbers = new string[3] { "1", "2", "3" };
 	private static readonly string[] rotationNames = new string[4] { "0", "1", "2", "3" };
 
-    private static int moduleIdCounter = 1;
-    private int moduleId;
-    private bool moduleSolved;
+	private static int moduleIdCounter = 1;
+	private int moduleId;
+	private bool moduleSolved;
 
     void Awake()
     {
