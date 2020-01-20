@@ -77,7 +77,7 @@ public class hyperneedy : MonoBehaviour
 
 	void ButtonPress()
 	{
-		if (animating || !discsOut)
+		if (animating || !discsOut || !active)
 			return;
 		StartCoroutine(Rotation());
 	}
@@ -100,23 +100,9 @@ public class hyperneedy : MonoBehaviour
 		animating = false;
 	}
 
-	/*IEnumerator Rotation(Transform disc, int ix, int rotationIx)
-	{
-		yield return null;
-		int currentPosition = Array.IndexOf(defaultPositions, disc);
-		bool left = currentPosition % 2 == 0;
-		bool bottom = currentPosition / 4 == 0 || currentPosition / 4 == 2;
-		bool back = currentPosition % 4 == 0 || currentPosition % 4 == 1;
-		bool zig = currentPosition / 4 == 0 || currentPosition / 4 == 1;
-		bool inverse = rotationIx % 2 != 0;
-		bool involvesW = rotationIx >= 6;
-		float startX = disc.localPosition.x;
-		float startY = disc.localPosition.y;
-		float startZ = disc.localPosition.z;
-	}*/
-
 	IEnumerator Rotation()
 	{
+		animating = true;
 		var unrotatedVertices = GetUnrotatedVertices();
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
         var axis1 = "XYZW".IndexOf(rotationNames[rotationIndex][0]);
@@ -142,6 +128,7 @@ public class hyperneedy : MonoBehaviour
             elapsed += Time.deltaTime;
         }
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
+		animating = false;
 	}
 
 	void SetHypercube(Vector3[] vertices)

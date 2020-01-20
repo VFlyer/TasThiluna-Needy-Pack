@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 23637098160526898}
   - component: {fileID: 114720632322555916}
   m_Layer: 0
-  m_Name: zag-top-back-left
+  m_Name: zag-back-top-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 23942941190273670}
   - component: {fileID: 114528603126991818}
   m_Layer: 0
-  m_Name: zig-bottom-front-left
+  m_Name: zig-front-bottom-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 23126172359764174}
   - component: {fileID: 114246937413881506}
   m_Layer: 0
-  m_Name: zig-top-front-left
+  m_Name: zig-front-top-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 23017329646942988}
   - component: {fileID: 114187445499792698}
   m_Layer: 0
-  m_Name: zag-bottom-front-left
+  m_Name: zag-front-bottom-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 23913569171696382}
   - component: {fileID: 114071052301730198}
   m_Layer: 0
-  m_Name: zig-top-front-right
+  m_Name: zig-front-top-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 23118978391595996}
   - component: {fileID: 114769285008707302}
   m_Layer: 0
-  m_Name: zig-top-back-right
+  m_Name: zig-back-top-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 23591078404932186}
   - component: {fileID: 114930383786174580}
   m_Layer: 0
-  m_Name: zig-bottom-back-right
+  m_Name: zig-back-bottom-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 23698531406563274}
   - component: {fileID: 114441754335060042}
   m_Layer: 0
-  m_Name: zag-top-back-right
+  m_Name: zag-back-top-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 23971007770402066}
   - component: {fileID: 114454367097220292}
   m_Layer: 0
-  m_Name: zag-top-front-left
+  m_Name: zag-front-top-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 23957428718154668}
   - component: {fileID: 114357543344556434}
   m_Layer: 0
-  m_Name: zag-bottom-front-right
+  m_Name: zag-front-bottom-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 23132171873818846}
   - component: {fileID: 114928910243835522}
   m_Layer: 0
-  m_Name: zag-bottom-back-left
+  m_Name: zag-back-bottom-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 23534430223020866}
   - component: {fileID: 114047711647089672}
   m_Layer: 0
-  m_Name: zig-bottom-front-right
+  m_Name: zig-front-bottom-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 23216946834963838}
   - component: {fileID: 114311957151631854}
   m_Layer: 0
-  m_Name: zig-bottom-back-left
+  m_Name: zig-back-bottom-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 23450945419942840}
   - component: {fileID: 114596080847366224}
   m_Layer: 0
-  m_Name: zag-bottom-back-right
+  m_Name: zag-back-bottom-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 23442231047358848}
   - component: {fileID: 114957719823591686}
   m_Layer: 0
-  m_Name: zag-top-front-right
+  m_Name: zag-front-top-right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 23182170625491370}
   - component: {fileID: 114307666160730130}
   m_Layer: 0
-  m_Name: zig-top-back-left
+  m_Name: zig-back-top-left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
