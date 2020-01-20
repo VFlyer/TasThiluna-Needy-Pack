@@ -80,6 +80,7 @@ public class rotatingSquares : MonoBehaviour
 		{
 			for (int i = 0; i < 16; i++)
 				pressed[i] = false;
+			audio.PlaySoundAtTransform("jingle", platform);
 			foreach (Renderer buttonR in buttonRenders)
 				StartCoroutine(Reset(buttonR));
 		}

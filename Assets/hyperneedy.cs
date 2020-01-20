@@ -13,14 +13,17 @@ public class hyperneedy : MonoBehaviour
 	public KMNeedyModule module;
 
 	public KMSelectable button;
+	public KMSelectable[] axisButtons;
 	public Transform[] allDiscs;
 	public Renderer[] allDiscRenders;
 	public Color[] discColors;
+	private Color[] usedColors = new Color[16];
 
 	private bool active;
 	private bool animating;
 	private bool discsOut;
 	private int rotationIndex;
+	private int enteringStage;
 	private Vector3[] defaultPositions = new Vector3[16];
 	private static readonly string[] rotationNames = new string[12] { "XY", "YX", "XZ", "ZX", "XW", "WX", "YZ", "ZY", "YW", "WY", "ZW", "WZ" };
 
@@ -35,12 +38,14 @@ public class hyperneedy : MonoBehaviour
 		module.OnNeedyDeactivation += OnNeedyDeactivation;
 		module.OnTimerExpired += OnTimerExpired;
 		button.OnInteract += delegate () { ButtonPress(); return false; };
+		foreach (KMSelectable axisButton in axisButtons)
+			axisButton.OnInteract += delegate () { AxisButtonPress(axisButton); return false; };
     }
 
     void Start()
     {
 		Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
-		//var usedColors = discColors.ToList().Shuffle();
+		//usedColors = discColors.ToList().Shuffle().ToArray();
 		for (int i = 0; i < 16; i++)
 		{
 			//allDiscRenders[i].material.color = usedColors[i];
@@ -61,6 +66,7 @@ public class hyperneedy : MonoBehaviour
 	protected void OnNeedyDeactivation()
 	{
 		active = false;
+		enteringStage = 0;
 		var vertices = GetUnrotatedVertices();
 		for (int i = 0; i < 16; i++)
 			StartCoroutine(Move(allDiscs[i], vertices[i].Project(), new Vector3(0f, 0f, 0f), false));
@@ -80,6 +86,29 @@ public class hyperneedy : MonoBehaviour
 		if (animating || !discsOut || !active)
 			return;
 		StartCoroutine(Rotation());
+	}
+
+	void AxisButtonPress(KMSelectable axisButton)
+	{
+		if (!active)
+			return;
+		var currentRotation = rotationNames[rotationIndex].ToCharArray();
+		axisButton.AddInteractionPunch(.5f);
+		if (axisButton.GetComponentInChildren<TextMesh>().text != currentRotation[enteringStage].ToString())
+		{
+			module.OnStrike();
+			enteringStage = 0;
+		}
+		else
+		{
+			enteringStage++;
+			audio.PlaySoundAtTransform("Bleep" + rnd.Range(1,11).ToString(), axisButton.transform);
+		}
+		if (enteringStage == 2)
+		{
+			module.OnPass();
+			OnNeedyDeactivation();
+		}
 	}
 
 	IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
@@ -127,6 +156,14 @@ public class hyperneedy : MonoBehaviour
             yield return null;
             elapsed += Time.deltaTime;
         }
+		/*var axis12 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][0]);
+		var axis22 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][1]);
+		var newColors = new Color[16];
+		for (int i = 0; i < 16; i++)
+			newColors[((i & axis12) != 0) ^ ((i & axis22) != 0) ? (i ^ axis22) : (i ^ axis12)] = usedColors[i];
+		usedColors = newColors;
+		for (int i = 0; i < 16; i++)
+			allDiscRenders[i].material.color = usedColors[i];*/
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
 		animating = false;
 	}
