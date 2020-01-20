@@ -22,7 +22,8 @@ public class hyperneedy : MonoBehaviour
 	private bool discsOut;
 	private int rotationIndex;
 	private Vector3[] defaultPositions = new Vector3[16];
-	
+	private static readonly string[] rotationNames = new string[12] { "XY", "YX", "XZ", "ZX", "XW", "WX", "YZ", "ZY", "YW", "WY", "ZW", "WZ" };
+
     private static int moduleIdCounter = 1;
     private int moduleId;
     private bool moduleSolved;
@@ -39,11 +40,10 @@ public class hyperneedy : MonoBehaviour
     void Start()
     {
 		Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
-		rotationIndex = 0; // TEMPORARY
-		var usedColors = discColors.ToList().Shuffle();
+		//var usedColors = discColors.ToList().Shuffle();
 		for (int i = 0; i < 16; i++)
 		{
-			allDiscRenders[i].material.color = usedColors[i];
+			//allDiscRenders[i].material.color = usedColors[i];
 			defaultPositions[i] = allDiscs[i].localPosition;
 			allDiscs[i].localPosition = new Vector3(0f, 0f, 0f);
 		}
@@ -52,17 +52,18 @@ public class hyperneedy : MonoBehaviour
 	protected void OnNeedyActivation()
 	{
 		active = true;
-		//rotationIndex = rnd.Range(0,12);
-		rotationIndex = 0; // TEMPORARY
-		foreach (Transform disc in allDiscs)
-			StartCoroutine(Move(disc, Array.IndexOf(allDiscs, disc), new Vector3 (0f, 0f, 0f), defaultPositions[Array.IndexOf(allDiscs, disc)], true));
+		rotationIndex = rnd.Range(0,12);
+		var vertices = GetUnrotatedVertices();
+		for (int i = 0; i < 16; i++)
+			StartCoroutine(Move(allDiscs[i], new Vector3(0f, 0f, 0f), vertices[i].Project(), true));
 	}
 
 	protected void OnNeedyDeactivation()
 	{
 		active = false;
-		foreach (Transform disc in allDiscs)
-			StartCoroutine(Move(disc, Array.IndexOf(allDiscs, disc), disc.localPosition, new Vector3 (0f, 0f, 0f), false));
+		var vertices = GetUnrotatedVertices();
+		for (int i = 0; i < 16; i++)
+			StartCoroutine(Move(allDiscs[i], vertices[i].Project(), new Vector3(0f, 0f, 0f), false));
 	}
 
 	protected void OnTimerExpired()
@@ -76,17 +77,12 @@ public class hyperneedy : MonoBehaviour
 
 	void ButtonPress()
 	{
-		if (animating)
+		if (animating || !discsOut)
 			return;
-		if (!discsOut)
-			foreach (Transform disc in allDiscs)
-				StartCoroutine(Move(disc, Array.IndexOf(allDiscs, disc), new Vector3 (0f, 0f, 0f), defaultPositions[Array.IndexOf(allDiscs, disc)], true));
-		else
-			foreach (Transform disc in allDiscs)
-				StartCoroutine(Rotation(disc, Array.IndexOf(allDiscs, disc), rotationIndex));
+		StartCoroutine(Rotation());
 	}
 
-	IEnumerator Move(Transform disc, int ix, Vector3 startPosition, Vector3 endPosition, bool next)
+	IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
 	{
 		animating = true;
 		var elapsed = 0f;
@@ -104,7 +100,7 @@ public class hyperneedy : MonoBehaviour
 		animating = false;
 	}
 
-	IEnumerator Rotation(Transform disc, int ix, int rotationIx)
+	/*IEnumerator Rotation(Transform disc, int ix, int rotationIx)
 	{
 		yield return null;
 		int currentPosition = Array.IndexOf(defaultPositions, disc);
@@ -117,5 +113,46 @@ public class hyperneedy : MonoBehaviour
 		float startX = disc.localPosition.x;
 		float startY = disc.localPosition.y;
 		float startZ = disc.localPosition.z;
+	}*/
+
+	IEnumerator Rotation()
+	{
+		var unrotatedVertices = GetUnrotatedVertices();
+        SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
+        var axis1 = "XYZW".IndexOf(rotationNames[rotationIndex][0]);
+        var axis2 = "XYZW".IndexOf(rotationNames[rotationIndex][1]);
+        var duration = 2f;
+        var elapsed = 0f;
+        while (elapsed < duration)
+        {
+            var angle = Easing.InOutQuad(elapsed, 0, Mathf.PI / 2, duration);
+            var matrix = new double[16];
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                    matrix[i + 4 * j] =
+                        i == axis1 && j == axis1 ? Mathf.Cos(angle) :
+                        i == axis1 && j == axis2 ? Mathf.Sin(angle) :
+                        i == axis2 && j == axis1 ? -Mathf.Sin(angle) :
+                        i == axis2 && j == axis2 ? Mathf.Cos(angle) :
+                        i == j ? 1 : 0;
+
+            SetHypercube(unrotatedVertices.Select(v => (v * matrix).Project()).ToArray());
+
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
 	}
+
+	void SetHypercube(Vector3[] vertices)
+	{
+		for (int i = 0; i < 16; i++)
+			allDiscs[i].localPosition = vertices[i];
+	}
+
+	private Point4D[] GetUnrotatedVertices()
+   	{
+		return Enumerable.Range(0, 1 << 4).Select(i => new Point4D((i & 1) != 0 ? 1 : -1, (i & 2) != 0 ? 1 : -1, (i & 4) != 0 ? 1 : -1, (i & 8) != 0 ? 1 : -1)).ToArray();
+   	}
+
 }
