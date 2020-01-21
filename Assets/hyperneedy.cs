@@ -45,10 +45,10 @@ public class hyperneedy : MonoBehaviour
     void Start()
     {
 		Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
-		//usedColors = discColors.ToList().Shuffle().ToArray();
+		usedColors = discColors.ToList().Shuffle().ToArray();
 		for (int i = 0; i < 16; i++)
 		{
-			//allDiscRenders[i].material.color = usedColors[i];
+			allDiscRenders[i].material.color = usedColors[i];
 			defaultPositions[i] = allDiscs[i].localPosition;
 			allDiscs[i].localPosition = new Vector3(0f, 0f, 0f);
 		}
@@ -156,14 +156,14 @@ public class hyperneedy : MonoBehaviour
             yield return null;
             elapsed += Time.deltaTime;
         }
-		/*var axis12 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][0]);
+		var axis12 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][0]);
 		var axis22 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][1]);
 		var newColors = new Color[16];
 		for (int i = 0; i < 16; i++)
 			newColors[((i & axis12) != 0) ^ ((i & axis22) != 0) ? (i ^ axis22) : (i ^ axis12)] = usedColors[i];
 		usedColors = newColors;
 		for (int i = 0; i < 16; i++)
-			allDiscRenders[i].material.color = usedColors[i];*/
+			allDiscRenders[i].material.color = usedColors[i];
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
 		animating = false;
 	}
