@@ -2,8 +2,8 @@ using UnityEngine;
 
 struct Point4D
 {
-	public double X { get; private set; }
-	public double Y { get; private set; }
+    public double X { get; private set; }
+    public double Y { get; private set; }
     public double Z { get; private set; }
     public double W { get; private set; }
 
@@ -20,7 +20,7 @@ struct Point4D
 
     public Vector3 Project()
     {
-        return new Vector3((float) X, (float) Y + 3f, (float) Z) * .03f + (float) W * wVec;
+        return new Vector3((float)X, (float)Y + 3f, (float)Z) * .03f + (float)W * wVec;
     }
 
     public static Point4D operator *(Point4D p, double[] matrix)

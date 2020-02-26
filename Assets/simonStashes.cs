@@ -10,9 +10,9 @@ public class simonStashes : MonoBehaviour
 {
     public new KMAudio audio;
     public KMBombInfo bomb;
-	public KMNeedyModule module;
+    public KMNeedyModule module;
 
-	private bool active;
+    private bool active;
 
     private static int moduleIdCounter = 1;
     private int moduleId;
@@ -20,33 +20,33 @@ public class simonStashes : MonoBehaviour
 
     void Awake()
     {
-    	moduleId = moduleIdCounter++;
-		module.OnNeedyActivation += OnNeedyActivation;
-		module.OnNeedyDeactivation += OnNeedyDeactivation;
-		module.OnTimerExpired += OnTimerExpired;
+        moduleId = moduleIdCounter++;
+        module.OnNeedyActivation += OnNeedyActivation;
+        module.OnNeedyDeactivation += OnNeedyDeactivation;
+        module.OnTimerExpired += OnTimerExpired;
     }
 
     void Start()
     {
-		Debug.LogFormat("[Simon Stashes #{0}] Needy initiated.", moduleId);
+        Debug.LogFormat("[Simon Stashes #{0}] Needy initiated.", moduleId);
     }
 
-	protected void OnNeedyActivation()
-	{
-		active = true;
-	}
+    protected void OnNeedyActivation()
+    {
+        active = true;
+    }
 
-	protected void OnNeedyDeactivation()
-	{
-		active = false;
-	}
+    protected void OnNeedyDeactivation()
+    {
+        active = false;
+    }
 
-	protected void OnTimerExpired()
-	{
-		if (active)
-		{
-			module.OnStrike();
-			OnNeedyDeactivation();
-		}
-	}
+    protected void OnTimerExpired()
+    {
+        if (active)
+        {
+            module.OnStrike();
+            OnNeedyDeactivation();
+        }
+    }
 }

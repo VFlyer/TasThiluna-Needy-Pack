@@ -10,22 +10,22 @@ public class hyperneedy : MonoBehaviour
 {
     public new KMAudio audio;
     public KMBombInfo bomb;
-	public KMNeedyModule module;
+    public KMNeedyModule module;
 
-	public KMSelectable button;
-	public KMSelectable[] axisButtons;
-	public Transform[] allDiscs;
-	public Renderer[] allDiscRenders;
-	public Color[] discColors;
-	private Color[] usedColors = new Color[16];
+    public KMSelectable button;
+    public KMSelectable[] axisButtons;
+    public Transform[] allDiscs;
+    public Renderer[] allDiscRenders;
+    public Color[] discColors;
+    private Color[] usedColors = new Color[16];
 
-	private bool active;
-	private bool animating;
-	private bool discsOut;
-	private int rotationIndex;
-	private int enteringStage;
-	private Vector3[] defaultPositions = new Vector3[16];
-	private static readonly string[] rotationNames = new string[12] { "XY", "YX", "XZ", "ZX", "XW", "WX", "YZ", "ZY", "YW", "WY", "ZW", "WZ" };
+    private bool active;
+    private bool animating;
+    private bool discsOut;
+    private int rotationIndex;
+    private int enteringStage;
+    private Vector3[] defaultPositions = new Vector3[16];
+    private static readonly string[] rotationNames = new string[12] { "XY", "YX", "XZ", "ZX", "XW", "WX", "YZ", "ZY", "YW", "WY", "ZW", "WZ" };
 
     private static int moduleIdCounter = 1;
     private int moduleId;
@@ -33,106 +33,106 @@ public class hyperneedy : MonoBehaviour
 
     void Awake()
     {
-    	moduleId = moduleIdCounter++;
-		module.OnNeedyActivation += OnNeedyActivation;
-		module.OnNeedyDeactivation += OnNeedyDeactivation;
-		module.OnTimerExpired += OnTimerExpired;
-		button.OnInteract += delegate () { ButtonPress(); return false; };
-		foreach (KMSelectable axisButton in axisButtons)
-			axisButton.OnInteract += delegate () { AxisButtonPress(axisButton); return false; };
+        moduleId = moduleIdCounter++;
+        module.OnNeedyActivation += OnNeedyActivation;
+        module.OnNeedyDeactivation += OnNeedyDeactivation;
+        module.OnTimerExpired += OnTimerExpired;
+        button.OnInteract += delegate () { ButtonPress(); return false; };
+        foreach (KMSelectable axisButton in axisButtons)
+            axisButton.OnInteract += delegate () { AxisButtonPress(axisButton); return false; };
     }
 
     void Start()
     {
-		Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
-		usedColors = discColors.ToList().Shuffle().ToArray();
-		for (int i = 0; i < 16; i++)
-		{
-			allDiscRenders[i].material.color = usedColors[i];
-			defaultPositions[i] = allDiscs[i].localPosition;
-			allDiscs[i].localPosition = new Vector3(0f, 0f, 0f);
-		}
+        Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
+        usedColors = discColors.ToList().Shuffle().ToArray();
+        for (int i = 0; i < 16; i++)
+        {
+            allDiscRenders[i].material.color = usedColors[i];
+            defaultPositions[i] = allDiscs[i].localPosition;
+            allDiscs[i].localPosition = new Vector3(0f, 0f, 0f);
+        }
     }
 
-	protected void OnNeedyActivation()
-	{
-		active = true;
-		rotationIndex = rnd.Range(0,12);
-		var vertices = GetUnrotatedVertices();
-		for (int i = 0; i < 16; i++)
-			StartCoroutine(Move(allDiscs[i], new Vector3(0f, 0f, 0f), vertices[i].Project(), true));
-	}
+    protected void OnNeedyActivation()
+    {
+        active = true;
+        rotationIndex = rnd.Range(0, 12);
+        var vertices = GetUnrotatedVertices();
+        for (int i = 0; i < 16; i++)
+            StartCoroutine(Move(allDiscs[i], new Vector3(0f, 0f, 0f), vertices[i].Project(), true));
+    }
 
-	protected void OnNeedyDeactivation()
-	{
-		active = false;
-		enteringStage = 0;
-		var vertices = GetUnrotatedVertices();
-		for (int i = 0; i < 16; i++)
-			StartCoroutine(Move(allDiscs[i], vertices[i].Project(), new Vector3(0f, 0f, 0f), false));
-	}
+    protected void OnNeedyDeactivation()
+    {
+        active = false;
+        enteringStage = 0;
+        var vertices = GetUnrotatedVertices();
+        for (int i = 0; i < 16; i++)
+            StartCoroutine(Move(allDiscs[i], vertices[i].Project(), new Vector3(0f, 0f, 0f), false));
+    }
 
-	protected void OnTimerExpired()
-	{
-		if (active)
-		{
-			module.OnStrike();
-			OnNeedyDeactivation();
-		}
-	}
+    protected void OnTimerExpired()
+    {
+        if (active)
+        {
+            module.OnStrike();
+            OnNeedyDeactivation();
+        }
+    }
 
-	void ButtonPress()
-	{
-		if (animating || !discsOut || !active)
-			return;
-		StartCoroutine(Rotation());
-	}
+    void ButtonPress()
+    {
+        if (animating || !discsOut || !active)
+            return;
+        StartCoroutine(Rotation());
+    }
 
-	void AxisButtonPress(KMSelectable axisButton)
-	{
-		if (!active)
-			return;
-		var currentRotation = rotationNames[rotationIndex].ToCharArray();
-		axisButton.AddInteractionPunch(.5f);
-		if (axisButton.GetComponentInChildren<TextMesh>().text != currentRotation[enteringStage].ToString())
-		{
-			module.OnStrike();
-			enteringStage = 0;
-		}
-		else
-		{
-			enteringStage++;
-			audio.PlaySoundAtTransform("Bleep" + rnd.Range(1,11).ToString(), axisButton.transform);
-		}
-		if (enteringStage == 2)
-		{
-			module.OnPass();
-			OnNeedyDeactivation();
-		}
-	}
+    void AxisButtonPress(KMSelectable axisButton)
+    {
+        if (!active)
+            return;
+        var currentRotation = rotationNames[rotationIndex].ToCharArray();
+        axisButton.AddInteractionPunch(.5f);
+        if (axisButton.GetComponentInChildren<TextMesh>().text != currentRotation[enteringStage].ToString())
+        {
+            module.OnStrike();
+            enteringStage = 0;
+        }
+        else
+        {
+            enteringStage++;
+            audio.PlaySoundAtTransform("Bleep" + rnd.Range(1, 11).ToString(), axisButton.transform);
+        }
+        if (enteringStage == 2)
+        {
+            module.OnPass();
+            OnNeedyDeactivation();
+        }
+    }
 
-	IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
-	{
-		animating = true;
-		var elapsed = 0f;
-		var duration = 1f;
-		while (elapsed < duration)
-		{
-			disc.localPosition = new Vector3(
-				Easing.InOutSine(elapsed, startPosition.x, endPosition.x, duration),
-				Easing.InOutSine(elapsed, startPosition.y, endPosition.y, duration),
-				Easing.InOutSine(elapsed, startPosition.z, endPosition.z, duration));
-			yield return null;
-			elapsed += Time.deltaTime;
-		}
-		discsOut = next;
-		animating = false;
-	}
+    IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
+    {
+        animating = true;
+        var elapsed = 0f;
+        var duration = 1f;
+        while (elapsed < duration)
+        {
+            disc.localPosition = new Vector3(
+                Easing.InOutSine(elapsed, startPosition.x, endPosition.x, duration),
+                Easing.InOutSine(elapsed, startPosition.y, endPosition.y, duration),
+                Easing.InOutSine(elapsed, startPosition.z, endPosition.z, duration));
+            yield return null;
+            elapsed += Time.deltaTime;
+        }
+        discsOut = next;
+        animating = false;
+    }
 
-	IEnumerator Rotation()
-	{
-		animating = true;
-		var unrotatedVertices = GetUnrotatedVertices();
+    IEnumerator Rotation()
+    {
+        animating = true;
+        var unrotatedVertices = GetUnrotatedVertices();
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
         var axis1 = "XYZW".IndexOf(rotationNames[rotationIndex][0]);
         var axis2 = "XYZW".IndexOf(rotationNames[rotationIndex][1]);
@@ -156,27 +156,27 @@ public class hyperneedy : MonoBehaviour
             yield return null;
             elapsed += Time.deltaTime;
         }
-		var axis12 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][0]);
-		var axis22 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][1]);
-		var newColors = new Color[16];
-		for (int i = 0; i < 16; i++)
-			newColors[((i & axis12) != 0) ^ ((i & axis22) != 0) ? (i ^ axis22) : (i ^ axis12)] = usedColors[i];
-		usedColors = newColors;
-		for (int i = 0; i < 16; i++)
-			allDiscRenders[i].material.color = usedColors[i];
+        var axis12 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][0]);
+        var axis22 = 1 << "XYZW".IndexOf(rotationNames[rotationIndex][1]);
+        var newColors = new Color[16];
+        for (int i = 0; i < 16; i++)
+            newColors[((i & axis12) != 0) ^ ((i & axis22) != 0) ? (i ^ axis22) : (i ^ axis12)] = usedColors[i];
+        usedColors = newColors;
+        for (int i = 0; i < 16; i++)
+            allDiscRenders[i].material.color = usedColors[i];
         SetHypercube(unrotatedVertices.Select(v => v.Project()).ToArray());
-		animating = false;
-	}
+        animating = false;
+    }
 
-	void SetHypercube(Vector3[] vertices)
-	{
-		for (int i = 0; i < 16; i++)
-			allDiscs[i].localPosition = vertices[i];
-	}
+    void SetHypercube(Vector3[] vertices)
+    {
+        for (int i = 0; i < 16; i++)
+            allDiscs[i].localPosition = vertices[i];
+    }
 
-	private Point4D[] GetUnrotatedVertices()
-   	{
-		return Enumerable.Range(0, 1 << 4).Select(i => new Point4D((i & 1) != 0 ? 1 : -1, (i & 2) != 0 ? 1 : -1, (i & 4) != 0 ? 1 : -1, (i & 8) != 0 ? 1 : -1)).ToArray();
-   	}
+    private Point4D[] GetUnrotatedVertices()
+    {
+        return Enumerable.Range(0, 1 << 4).Select(i => new Point4D((i & 1) != 0 ? 1 : -1, (i & 2) != 0 ? 1 : -1, (i & 4) != 0 ? 1 : -1, (i & 8) != 0 ? 1 : -1)).ToArray();
+    }
 
 }
