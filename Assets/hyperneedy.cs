@@ -261,7 +261,7 @@ public class hyperneedy : MonoBehaviour
                 }
                 else
                 {
-                    yield return "sendtochaterror The specified rotation '"+parameters[1]+"' is invalid!";
+                    yield return "sendtochaterror The specified rotation '" + parameters[1] + "' is invalid!";
                 }
             }
             else if (parameters.Length == 1)
@@ -286,7 +286,7 @@ public class hyperneedy : MonoBehaviour
             while (animating && !discsOut) { yield return new WaitForSeconds(0.1f); }
             if (enteringStage == 1)
                 enteringStage = 0;
-            yield return ProcessTwitchCommand("press "+rotationNames[rotationIndex]);
+            yield return ProcessTwitchCommand("press " + rotationNames[rotationIndex]);
         }
     }
 }
