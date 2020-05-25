@@ -130,6 +130,7 @@ public class marcoPolo : MonoBehaviour
         {
             Debug.LogFormat("[Marco Polo #{0}] Pressed the {1} button, which was incorrect. Strike!", moduleId, Array.IndexOf(buttons, button) == 0 ? "left" : "right");
             module.OnStrike();
+            module.OnPass();
         }
         else
         {
