@@ -77,22 +77,22 @@ public class simonStashes : MonoBehaviour
         switch (colorsPresent[color2])
         {
             case 0:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetBatteryCount()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetBatteryCount()) % 16;
                 break;
             case 1:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetBatteryHolderCount()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetBatteryHolderCount()) % 16;
                 break;
             case 2:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetIndicators().Count()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetIndicators().Count()) % 16;
                 break;
             case 3:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetPortCount()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetPortCount()) % 16;
                 break;
             case 4:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetPortPlates().Count()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetPortPlates().Count()) % 16;
                 break;
             default:
-                result = (base36Values[colorsPresent[color1]] * bomb.GetSerialNumberNumbers().Sum()) % 15;
+                result = (base36Values[colorsPresent[color1]] * bomb.GetSerialNumberNumbers().Sum()) % 16;
                 break;
         }
         binary = Convert.ToString(result, 2).PadLeft(4, '0');

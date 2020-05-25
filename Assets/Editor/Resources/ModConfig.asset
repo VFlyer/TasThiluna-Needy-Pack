@@ -14,10 +14,12 @@ MonoBehaviour:
   id: tasNeedies
   title: TasThing's Needy Pack
   author: TasThing
-  description: "Word Scramble not included.\r\n\r\nThis pack contains 5 needy modules:\r\n\u2022Marco
-    Polo\r\n\u2022Red Light Green Light\r\n\u2022Rotating Squares\r\n\u2022Hyperneedy\r\n\u2022Boozleglyph
-    Identification\r\n\r\nRed Light Green Light idea by Pruz, Rotating Squares idea
-    by Kusane, all other ideas and implementation by TasThing.\r\n\r\nManuals HTML:\r\nMarco
+  description: "Word Scramble not included.\r\n\r\nThis pack contains 6 needy modules:\r\n
+    \u2022Marco Polo\r\n\u2022 Red Light Green Light\r\n\u2022 Rotating Squares\r\n\u2022
+    Hyperneedy\r\n\u2022 Boozleglyph Identification\r\n\u2022 Simon Stashes\n\r\nRed
+    Light Green Light idea by Pruz, Rotating Squares idea by Kusane, all other ideas
+    and implementation by TasThing.\r\nHyperneedy based on The Hypercube by Timwi,
+    Simon Stashes based on Simon Stores by SpeakingEvil.\n\r\nManuals HTML:\r\nMarco
     Polo: https://ktane.timwi.de/HTML/Marco%20Polo.html\r\nRed Light Green Light:
     https://ktane.timwi.de/HTML/Red%20Light%20Green%20Light.html\r\nRotating Squares:
     https://ktane.timwi.de/HTML/Rotating%20Squares.html\r\nHyperneedy: https://ktane.timwi.de/HTML/Hyperneedy.html\r\nBoozleglyph
