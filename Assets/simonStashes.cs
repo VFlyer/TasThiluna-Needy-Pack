@@ -59,9 +59,14 @@ public class simonStashes : MonoBehaviour
         module.SetResetDelayTime(60f, 90f);
         for (int i = 0; i < 6; i++)
             base36Values[i] = base36.IndexOf(bomb.GetSerialNumber()[i]);
+        float scalar = transform.lossyScale.x;
         foreach (Light l in buttonLights)
+        {
             l.enabled = false;
+            l.range *= scalar;
+        }
         centerLight.enabled = false;
+        centerLight.range *= scalar;
         centerButton.GetComponent<Renderer>().material.color = gray;
     }
 

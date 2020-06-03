@@ -47,6 +47,7 @@ public class marcoPolo : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Marco Polo #{0}] Needy initiated.", moduleId);
+        module.SetResetDelayTime(45f, 60f);
         foreach (TextMesh t in buttonTexts)
             t.text = "";
     }

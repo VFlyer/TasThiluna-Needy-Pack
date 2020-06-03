@@ -49,6 +49,7 @@ public class hyperneedy : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
+        module.SetResetDelayTime(45f, 60f);
         usedColors = discColors.ToList().Shuffle().ToArray();
         for (int i = 0; i < 16; i++)
         {

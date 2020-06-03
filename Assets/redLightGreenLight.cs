@@ -38,8 +38,13 @@ public class redLightGreenLight : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Red Light Green Light #{0}] Needy initiated.", moduleId);
+        module.SetResetDelayTime(30f, 45f);
+        float scalar = transform.lossyScale.x;
         foreach (Light l in lights)
+        {
             l.gameObject.SetActive(false);
+            l.range *= scalar;
+        }
         buttonText.text = "";
     }
 

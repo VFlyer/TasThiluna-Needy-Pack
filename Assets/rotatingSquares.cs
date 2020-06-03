@@ -44,6 +44,7 @@ public class rotatingSquares : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Rotating Squares #{0}] Needy initiated.", moduleId);
+        module.SetResetDelayTime(45f, 60f);
     }
 
     protected void OnNeedyActivation()

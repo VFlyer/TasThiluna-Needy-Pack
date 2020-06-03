@@ -55,6 +55,7 @@ public class boozleglyphIdentification : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Boozleglyph Identification #{0}] Needy initiated.", moduleId);
+        module.SetResetDelayTime(70f, 90f);
         screenText.text = "";
         allTextures = new List<Texture[]> { set1, set2, set3 };
     }
