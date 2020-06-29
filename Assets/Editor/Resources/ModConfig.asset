@@ -23,11 +23,12 @@ MonoBehaviour:
     Polo: https://ktane.timwi.de/HTML/Marco%20Polo.html\r\nRed Light Green Light:
     https://ktane.timwi.de/HTML/Red%20Light%20Green%20Light.html\r\nRotating Squares:
     https://ktane.timwi.de/HTML/Rotating%20Squares.html\r\nHyperneedy: https://ktane.timwi.de/HTML/Hyperneedy.html\r\nBoozleglyph
-    Identification: https://ktane.timwi.de/HTML/Boozleglyph%20Identification.html\r\n\r\nManuals
-    PDF:\r\nMarco Polo: https://ktane.timwi.de/PDF/Marco%20Polo.pdf\r\nRed Light Green
-    Light: https://ktane.timwi.de/PDF/Red%20Light%20Green%20Light.pdf\r\nRotating
+    Identification: https://ktane.timwi.de/HTML/Boozleglyph%20Identification.html\r\nSimon
+    Stashes: https://ktane.timwi.de/HTML/Simon%20Stashes.html\n\r\nManuals PDF:\r\nMarco
+    Polo: https://ktane.timwi.de/PDF/Marco%20Polo.pdf\r\nRed Light Green Light: https://ktane.timwi.de/PDF/Red%20Light%20Green%20Light.pdf\r\nRotating
     Squares: https://ktane.timwi.de/PDF/Rotating%20Squares.pdf\r\nHyperneedy: https://ktane.timwi.de/PDF/Hyperneedy.pdf\r\nBoozleglyph
-    Identification: https://ktane.timwi.de/PDF/Boozleglyph%20Identification.pdf"
+    Identification: https://ktane.timwi.de/PDF/Boozleglyph%20Identification.pdf\nSimon
+    Stashes: https://ktane.timwi.de/PDF/Simon%20Stashes.pdf"
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: e499019fbe32f1a4cb3e2eaf97761624, type: 3}
