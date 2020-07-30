@@ -101,7 +101,7 @@ public class simonStashes : MonoBehaviour
                 break;
         }
         binary = Convert.ToString(result, 2).PadLeft(4, '0');
-        Debug.LogFormat("[Simon Stashes #{0}] The result of the math is {1}, and the corresponding binary is {2}.", moduleIdCounter, result, binary);
+        Debug.LogFormat("[Simon Stashes #{0}] The result of the math is {1}, and the corresponding binary is {2}.", moduleId, result, binary);
     }
 
     IEnumerator ShowColors()
