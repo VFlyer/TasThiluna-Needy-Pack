@@ -192,6 +192,7 @@ public class hyperneedy : MonoBehaviour
     #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} rotate (#) [Starts the rotation of the floating discs (Optionally '#' times)] | !{0} press <rot> [Presses the buttons corresponding to the rotation 'rot'] | Valid rotations are XY, YX, XZ, ZX, XW, WX, YZ, ZY, YW, WY, ZW, and WZ";
     #pragma warning restore 414
+    
     IEnumerator ProcessTwitchCommand(string command)
     {
         string[] parameters = command.Split(' ');

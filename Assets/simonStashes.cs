@@ -41,6 +41,7 @@ public class simonStashes : MonoBehaviour
     private static int moduleIdCounter = 1;
     private int moduleId;
     private bool moduleSolved;
+    private bool bombSolved;
 
     void Awake()
     {
@@ -48,6 +49,8 @@ public class simonStashes : MonoBehaviour
         module.OnNeedyActivation += OnNeedyActivation;
         module.OnNeedyDeactivation += OnNeedyDeactivation;
         module.OnTimerExpired += OnTimerExpired;
+        bomb.OnBombExploded += delegate () { bombSolved = true; };
+        bomb.OnBombSolved += delegate () { bombSolved = true; };
         centerButton.OnInteract += delegate () { PressButton(); return false; };
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { PressButton(button); return false; };
@@ -140,6 +143,7 @@ public class simonStashes : MonoBehaviour
 
     IEnumerator FlashSequence()
     {
+        autosolveInteract = true;
         resetSequence:
         centerLight.enabled = true;
         centerButton.GetComponent<Renderer>().material.color = litGray;
@@ -227,6 +231,7 @@ public class simonStashes : MonoBehaviour
     IEnumerator Submit(bool correct)
     {
         audio.PlaySoundAtTransform("InputCheck", centerButton.transform);
+        autosolveInteract = false;
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -269,5 +274,58 @@ public class simonStashes : MonoBehaviour
         buttonRenders[ix].material.color = litColors[colorsPresent[ix]];
         pressedCount++;
         audio.PlaySoundAtTransform("ButtonPress" + pressedCount, button.transform);
+    }
+
+    // Twitch Plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} <1/2/3/4> [Presses those colored buttons, starting from the top-right and counting clockwise. Can be chained, i.e. ''!{0} press 134'.] !{0} center [Presses the gray button.]";
+    private bool autosolveInteract;
+    #pragma warning restore 414
+
+    IEnumerator ProcessTwitchCommand(string cmd)
+    {
+        if (cmd.Trim().All(x => "1234".Contains(x)))
+        {
+            yield return null;
+            for (int i = 0; i < cmd.Length; i++)
+            {
+                buttons[Int32.Parse(cmd[i].ToString()) - 1].OnInteract();
+                yield return new WaitForSeconds(.1f);
+            }
+        }
+        else if (new string[] { "c", "gray", "grey", "center", "centre", "middle", "submit", "enter" }.Contains(cmd.Trim().ToLowerInvariant()))
+        {
+            yield return null;
+            centerButton.OnInteract();
+        }
+        else
+            yield break;
+    }
+
+    void TwitchHandleForcedSolve()
+    {
+        //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
+        StartCoroutine(HandleSolve());
+    }
+
+    IEnumerator HandleSolve()
+    {
+        while (!bombSolved)
+        {
+            while (!autosolveInteract)
+                yield return new WaitForSeconds(.1f);
+            centerButton.OnInteract();
+            yield return new WaitForSeconds(.1f);
+            for (int i = 0; i < 4; i++)
+            {
+                if ((binary[i] == '1' && !selected[i]) || (binary[i] != '1' && selected[i]))
+                {
+                    buttons[i].OnInteract();
+                    yield return new WaitForSeconds(.1f);
+                }
+            }
+            yield return new WaitForSeconds(.1f);
+            centerButton.OnInteract();
+        }
     }
 }
