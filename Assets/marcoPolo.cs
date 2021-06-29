@@ -18,6 +18,7 @@ public class marcoPolo : MonoBehaviour
     public TextMesh[] buttonTexts;
     public Color[] textColors;
     public Transform[] positions;
+    public TextMesh colorblindText;
 
     private bool active;
     private bool bombSolved;
@@ -42,11 +43,15 @@ public class marcoPolo : MonoBehaviour
         soundButton.OnInteract += delegate () { PressSoundButton(); return false; };
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { PressButton(button); return false; };
+        colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
     void Start()
     {
         Debug.LogFormat("[Marco Polo #{0}] Needy initiated.", moduleId);
+        positions[0].localPosition = new Vector3(-(transform.lossyScale.x / .278f), 0f, 0f);
+        positions[1].localPosition = new Vector3(transform.lossyScale.x / .278f, 0f, 0f);
+        Debug.Log(transform.lossyScale.x);
         module.SetResetDelayTime(45f, 60f);
         foreach (TextMesh t in buttonTexts)
             t.text = "";
@@ -56,6 +61,7 @@ public class marcoPolo : MonoBehaviour
     {
         active = true;
         isBlue = rnd.Range(0, 2) == 0;
+        colorblindText.text = isBlue ? "B" : "K";
         swapped = rnd.Range(0, 2) == 0;
         directionIndex = rnd.Range(0, 2);
         if (directionIndex == 0)
@@ -102,6 +108,7 @@ public class marcoPolo : MonoBehaviour
         active = false;
         foreach (TextMesh t in buttonTexts)
             t.text = "";
+        colorblindText.text = "";
     }
 
     protected void OnTimerExpired()

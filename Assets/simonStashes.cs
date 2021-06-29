@@ -21,6 +21,7 @@ public class simonStashes : MonoBehaviour
     public Color litGray;
     public Light centerLight;
     public Light[] buttonLights;
+    public TextMesh colorblindText;
 
     private int color1;
     private int color2;
@@ -54,6 +55,7 @@ public class simonStashes : MonoBehaviour
         centerButton.OnInteract += delegate () { PressButton(); return false; };
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { PressButton(button); return false; };
+        colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
     void Start()
@@ -77,6 +79,8 @@ public class simonStashes : MonoBehaviour
     {
         active = true;
         colorsPresent = Enumerable.Range(0, 6).ToList().Shuffle().Take(4).ToArray();
+        var colorString = "RGBCMY";
+        colorblindText.text = string.Format("{0}{1}\n{2}{3}", colorString[colorsPresent[3]], colorString[colorsPresent[0]], colorString[colorsPresent[1]], colorString[colorsPresent[2]]);
         color1 = rnd.Range(0, 4);
         color2 = rnd.Range(0, 4);
         Debug.LogFormat("[Simon Stashes #{0}] Needy activated!", moduleId);
@@ -183,6 +187,7 @@ public class simonStashes : MonoBehaviour
             buttonRenders[i].material.color = colors[colorsPresent[i]];
         }
         StartCoroutine(ShowColors());
+        colorblindText.text = "";
         pressedCount = 0;
         centerPressed = false;
     }
