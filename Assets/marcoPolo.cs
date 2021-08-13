@@ -17,7 +17,6 @@ public class marcoPolo : MonoBehaviour
     public KMSelectable[] buttons;
     public TextMesh[] buttonTexts;
     public Color[] textColors;
-    public Transform[] positions;
     public TextMesh colorblindText;
 
     private bool active;
@@ -49,9 +48,6 @@ public class marcoPolo : MonoBehaviour
     void Start()
     {
         Debug.LogFormat("[Marco Polo #{0}] Needy initiated.", moduleId);
-        positions[0].localPosition = new Vector3(-(transform.lossyScale.x / .278f), 0f, 0f);
-        positions[1].localPosition = new Vector3(transform.lossyScale.x / .278f, 0f, 0f);
-        Debug.Log(transform.lossyScale.x);
         module.SetResetDelayTime(45f, 60f);
         foreach (TextMesh t in buttonTexts)
             t.text = "";
@@ -125,7 +121,7 @@ public class marcoPolo : MonoBehaviour
         if (!active)
             return;
         soundButton.AddInteractionPunch(.5f);
-        audio.PlaySoundAtTransform("beep", positions[directionIndex]);
+        audio.PlaySoundAtTransform("beep" + "lr"[directionIndex], transform);
     }
 
     void PressButton(KMSelectable button)

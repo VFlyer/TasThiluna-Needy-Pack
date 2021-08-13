@@ -1273,9 +1273,6 @@ MonoBehaviour:
   textColors:
   - {r: 0, g: 0, b: 0, a: 1}
   - {r: 0.51891476, g: 0.49632353, b: 0.7941176, a: 1}
-  positions:
-  - {fileID: 4504460279415962}
-  - {fileID: 4155187667443320}
   colorblindText: {fileID: 102012925469923352}
 --- !u!114 &114922850208150622
 MonoBehaviour:
