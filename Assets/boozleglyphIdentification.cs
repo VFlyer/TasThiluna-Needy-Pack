@@ -39,7 +39,7 @@ public class boozleglyphIdentification : MonoBehaviour
     private int moduleId;
     private bool moduleSolved;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         module.OnNeedyActivation += OnNeedyActivation;
@@ -52,7 +52,7 @@ public class boozleglyphIdentification : MonoBehaviour
             button.OnInteract += delegate () { PressArrowButton(button); return false; };
     }
 
-    void Start()
+    private void Start()
     {
         Debug.LogFormat("[Boozleglyph Identification #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(70f, 90f);
@@ -89,7 +89,7 @@ public class boozleglyphIdentification : MonoBehaviour
         }
     }
 
-    void Submit()
+    private void Submit()
     {
         if (!active)
             return;
@@ -123,7 +123,7 @@ public class boozleglyphIdentification : MonoBehaviour
         }
     }
 
-    void PressArrowButton(KMSelectable button)
+    private void PressArrowButton(KMSelectable button)
     {
         if (!active)
             return;
@@ -150,7 +150,7 @@ public class boozleglyphIdentification : MonoBehaviour
         UpdateScreen();
     }
 
-    void UpdateScreen()
+    private void UpdateScreen()
     {
         if (stage == 0)
             screenText.text = alphabet[chosenLetter];
@@ -159,10 +159,11 @@ public class boozleglyphIdentification : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} submit <boz> <set> [Submits the boozleglyph 'boz' from set 'set'] | Valid boozleglyphs are A-Z | Valid sets are 1-3";
-    #pragma warning restore 414
-    IEnumerator ProcessTwitchCommand(string command)
+#pragma warning restore 414
+
+    private IEnumerator ProcessTwitchCommand(string command)
     {
         string[] parameters = command.Split(' ');
         if (Regex.IsMatch(parameters[0], @"^\s*submit\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
@@ -276,13 +277,13 @@ public class boozleglyphIdentification : MonoBehaviour
         }
     }
 
-    void TwitchHandleForcedSolve()
+    private void TwitchHandleForcedSolve()
     {
         //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
         StartCoroutine(HandleSolve());
     }
 
-    IEnumerator HandleSolve()
+    private IEnumerator HandleSolve()
     {
         while (!bombSolved)
         {

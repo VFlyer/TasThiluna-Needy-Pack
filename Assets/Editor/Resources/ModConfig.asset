@@ -29,6 +29,6 @@ MonoBehaviour:
     Squares: https://ktane.timwi.de/PDF/Rotating%20Squares.pdf\r\nHyperneedy: https://ktane.timwi.de/PDF/Hyperneedy.pdf\r\nBoozleglyph
     Identification: https://ktane.timwi.de/PDF/Boozleglyph%20Identification.pdf\nSimon
     Stashes: https://ktane.timwi.de/PDF/Simon%20Stashes.pdf"
-  version: 2.4
+  version: 2.4.2
   outputFolder: build
   previewImage: {fileID: 2800000, guid: e499019fbe32f1a4cb3e2eaf97761624, type: 3}

@@ -44,7 +44,7 @@ public class simonStashes : MonoBehaviour
     private bool moduleSolved;
     private bool bombSolved;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         module.OnNeedyActivation += OnNeedyActivation;
@@ -58,7 +58,7 @@ public class simonStashes : MonoBehaviour
         colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
-    void Start()
+    private void Start()
     {
         Debug.LogFormat("[Simon Stashes #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(60f, 90f);
@@ -111,7 +111,7 @@ public class simonStashes : MonoBehaviour
         Debug.LogFormat("[Simon Stashes #{0}] The result of the math is {1}, and the corresponding binary is {2}.", moduleId, result, binary);
     }
 
-    IEnumerator ShowColors()
+    private IEnumerator ShowColors()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -123,7 +123,7 @@ public class simonStashes : MonoBehaviour
         }
     }
 
-    IEnumerator Fade(Renderer button, Color start, Color end)
+    private IEnumerator Fade(Renderer button, Color start, Color end)
     {
         animating = true;
         var elapsed = 0f;
@@ -145,10 +145,10 @@ public class simonStashes : MonoBehaviour
             flashing = StartCoroutine(FlashSequence());
     }
 
-    IEnumerator FlashSequence()
+    private IEnumerator FlashSequence()
     {
         autosolveInteract = true;
-        resetSequence:
+    resetSequence:
         centerLight.enabled = true;
         centerButton.GetComponent<Renderer>().material.color = litGray;
         yield return new WaitForSeconds(.4f);
@@ -201,7 +201,7 @@ public class simonStashes : MonoBehaviour
         }
     }
 
-    void PressButton()
+    private void PressButton()
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, centerButton.transform);
         if (!active || animating)
@@ -233,7 +233,7 @@ public class simonStashes : MonoBehaviour
         }
     }
 
-    IEnumerator Submit(bool correct)
+    private IEnumerator Submit(bool correct)
     {
         audio.PlaySoundAtTransform("InputCheck", centerButton.transform);
         autosolveInteract = false;
@@ -267,7 +267,7 @@ public class simonStashes : MonoBehaviour
         OnNeedyDeactivation();
     }
 
-    void PressButton(KMSelectable button)
+    private void PressButton(KMSelectable button)
     {
         if (!active || !centerPressed || animating || selected[Array.IndexOf(buttons, button)])
             return;
@@ -282,12 +282,12 @@ public class simonStashes : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} <1/2/3/4> [Presses those colored buttons, starting from the top-right and counting clockwise. Can be chained, i.e. ''!{0} press 134'.] !{0} center [Presses the gray button.]";
     private bool autosolveInteract;
-    #pragma warning restore 414
+#pragma warning restore 414
 
-    IEnumerator ProcessTwitchCommand(string cmd)
+    private IEnumerator ProcessTwitchCommand(string cmd)
     {
         if (cmd.Trim().All(x => "1234".Contains(x)))
         {
@@ -307,13 +307,13 @@ public class simonStashes : MonoBehaviour
             yield break;
     }
 
-    void TwitchHandleForcedSolve()
+    private void TwitchHandleForcedSolve()
     {
         //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
         StartCoroutine(HandleSolve());
     }
 
-    IEnumerator HandleSolve()
+    private IEnumerator HandleSolve()
     {
         while (!bombSolved)
         {

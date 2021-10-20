@@ -33,7 +33,7 @@ public class hyperneedy : MonoBehaviour
     private int moduleId;
     private bool moduleSolved;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         module.OnNeedyActivation += OnNeedyActivation;
@@ -46,7 +46,7 @@ public class hyperneedy : MonoBehaviour
             axisButton.OnInteract += delegate () { AxisButtonPress(axisButton); return false; };
     }
 
-    void Start()
+    private void Start()
     {
         Debug.LogFormat("[Hyperneedy #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(45f, 60f);
@@ -87,14 +87,14 @@ public class hyperneedy : MonoBehaviour
         }
     }
 
-    void ButtonPress()
+    private void ButtonPress()
     {
         if (animating || !discsOut || !active)
             return;
         StartCoroutine(Rotation());
     }
 
-    void AxisButtonPress(KMSelectable axisButton)
+    private void AxisButtonPress(KMSelectable axisButton)
     {
         if (!active)
             return;
@@ -120,7 +120,7 @@ public class hyperneedy : MonoBehaviour
         }
     }
 
-    IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
+    private IEnumerator Move(Transform disc, Vector3 startPosition, Vector3 endPosition, bool next)
     {
         animating = true;
         var elapsed = 0f;
@@ -138,7 +138,7 @@ public class hyperneedy : MonoBehaviour
         animating = false;
     }
 
-    IEnumerator Rotation()
+    private IEnumerator Rotation()
     {
         animating = true;
         var unrotatedVertices = GetUnrotatedVertices();
@@ -177,7 +177,7 @@ public class hyperneedy : MonoBehaviour
         animating = false;
     }
 
-    void SetHypercube(Vector3[] vertices)
+    private void SetHypercube(Vector3[] vertices)
     {
         for (int i = 0; i < 16; i++)
             allDiscs[i].localPosition = vertices[i];
@@ -189,11 +189,11 @@ public class hyperneedy : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} rotate (#) [Starts the rotation of the floating discs (Optionally '#' times)] | !{0} press <rot> [Presses the buttons corresponding to the rotation 'rot'] | Valid rotations are XY, YX, XZ, ZX, XW, WX, YZ, ZY, YW, WY, ZW, and WZ";
-    #pragma warning restore 414
-    
-    IEnumerator ProcessTwitchCommand(string command)
+#pragma warning restore 414
+
+    private IEnumerator ProcessTwitchCommand(string command)
     {
         string[] parameters = command.Split(' ');
         if (Regex.IsMatch(parameters[0], @"^\s*rotate\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
@@ -274,13 +274,13 @@ public class hyperneedy : MonoBehaviour
         }
     }
 
-    void TwitchHandleForcedSolve()
+    private void TwitchHandleForcedSolve()
     {
         //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
         StartCoroutine(HandleSolve());
     }
 
-    IEnumerator HandleSolve()
+    private IEnumerator HandleSolve()
     {
         while (!bombSolved)
         {

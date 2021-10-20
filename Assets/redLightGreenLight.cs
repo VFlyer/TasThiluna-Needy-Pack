@@ -24,7 +24,7 @@ public class redLightGreenLight : MonoBehaviour
     private static int moduleIdCounter = 1;
     private int moduleId;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         module.OnNeedyActivation += OnNeedyActivation;
@@ -35,7 +35,7 @@ public class redLightGreenLight : MonoBehaviour
         button.OnInteract += delegate () { ButtonPress(); return false; };
     }
 
-    void Start()
+    private void Start()
     {
         Debug.LogFormat("[Red Light Green Light #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(30f, 45f);
@@ -73,7 +73,7 @@ public class redLightGreenLight : MonoBehaviour
         }
     }
 
-    void ButtonPress()
+    private void ButtonPress()
     {
         if (!active)
             return;
@@ -93,7 +93,7 @@ public class redLightGreenLight : MonoBehaviour
         }
     }
 
-    IEnumerator PassingTime()
+    private IEnumerator PassingTime()
     {
         while (active)
         {
@@ -122,10 +122,11 @@ public class redLightGreenLight : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press at <num> [Presses the button when the number of seconds remaining on the needy's timer is 'num']";
-    #pragma warning restore 414
-    IEnumerator ProcessTwitchCommand(string command)
+#pragma warning restore 414
+
+    private IEnumerator ProcessTwitchCommand(string command)
     {
         command = command.ToLower();
         string[] parameters = command.Split(' ');
@@ -172,13 +173,13 @@ public class redLightGreenLight : MonoBehaviour
         }
     }
 
-    void TwitchHandleForcedSolve()
+    private void TwitchHandleForcedSolve()
     {
         //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
         StartCoroutine(HandleSolve());
     }
 
-    IEnumerator HandleSolve()
+    private IEnumerator HandleSolve()
     {
         while (!bombSolved)
         {

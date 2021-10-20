@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using KModkit;
-using rnd = UnityEngine.Random;
 using System.Text.RegularExpressions;
 
 public class rotatingSquares : MonoBehaviour
@@ -29,7 +28,7 @@ public class rotatingSquares : MonoBehaviour
     private static int moduleIdCounter = 1;
     private int moduleId;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         module.OnNeedyActivation += OnNeedyActivation;
@@ -41,7 +40,7 @@ public class rotatingSquares : MonoBehaviour
             button.OnInteract += delegate () { ButtonPress(button); return false; };
     }
 
-    void Start()
+    private void Start()
     {
         Debug.LogFormat("[Rotating Squares #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(45f, 60f);
@@ -67,7 +66,7 @@ public class rotatingSquares : MonoBehaviour
         }
     }
 
-    void ButtonPress(KMSelectable button)
+    private void ButtonPress(KMSelectable button)
     {
         if (!active)
             return;
@@ -97,7 +96,7 @@ public class rotatingSquares : MonoBehaviour
         }
     }
 
-    IEnumerator Reset(Renderer button)
+    private IEnumerator Reset(Renderer button)
     {
         var elapsed = 0f;
         var halfWay = .5f;
@@ -123,7 +122,7 @@ public class rotatingSquares : MonoBehaviour
         }
     }
 
-    IEnumerator Rotate()
+    private IEnumerator Rotate()
     {
         var currentRotation = platform.localEulerAngles;
         var nextRotation = rotations.Where(r => r != currentRotation).PickRandom();
@@ -145,10 +144,11 @@ public class rotatingSquares : MonoBehaviour
     // Twitch Plays
     private int[][] buttonsinrot = { new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 }, new int[] { 12, 8, 4, 0, 13, 9, 5, 1, 14, 10, 6, 2, 15, 11, 7, 3 }, new int[] { 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 }, new int[] { 3, 7, 11, 15, 2, 6, 10, 14, 1, 5, 9, 13, 0, 4, 8, 12 } };
 
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press <btn> [Presses button 'btn' in reading order] | Valid buttons are 1-16";
-    #pragma warning restore 414
-    IEnumerator ProcessTwitchCommand(string command)
+#pragma warning restore 414
+
+    private IEnumerator ProcessTwitchCommand(string command)
     {
         string[] parameters = command.Split(' ');
         if (Regex.IsMatch(parameters[0], @"^\s*press\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
@@ -183,13 +183,13 @@ public class rotatingSquares : MonoBehaviour
         }
     }
 
-    void TwitchHandleForcedSolve()
+    private void TwitchHandleForcedSolve()
     {
         //The code is done in a coroutine instead of here so that if the solvebomb command was executed this will just input the number right when it activates and it wont wait for its turn in the queue
         StartCoroutine(HandleSolve());
     }
 
-    IEnumerator HandleSolve()
+    private IEnumerator HandleSolve()
     {
         while (!bombSolved)
         {
