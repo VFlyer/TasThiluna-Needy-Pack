@@ -7,7 +7,7 @@ using KModkit;
 using rnd = UnityEngine.Random;
 using System.Text.RegularExpressions;
 
-public class redLightGreenLight : MonoBehaviour
+public class patience : MonoBehaviour
 {
     public new KMAudio audio;
     public KMBombInfo bomb;
@@ -37,7 +37,7 @@ public class redLightGreenLight : MonoBehaviour
 
     private void Start()
     {
-        Debug.LogFormat("[Red Light Green Light #{0}] Needy initiated.", moduleId);
+        Debug.LogFormat("[Patience #{0}] Needy initiated.", moduleId);
         module.SetResetDelayTime(30f, 45f);
         float scalar = transform.lossyScale.x;
         foreach (Light l in lights)
@@ -67,7 +67,7 @@ public class redLightGreenLight : MonoBehaviour
     {
         if (active)
         {
-            Debug.LogFormat("[Red Light Green Light #{0}] The button was not pressed in time, strike!", moduleId);
+            Debug.LogFormat("[Patience #{0}] The button was not pressed in time, strike!", moduleId);
             module.OnStrike();
             OnNeedyDeactivation();
         }
@@ -82,12 +82,12 @@ public class redLightGreenLight : MonoBehaviour
         var timeNow = Mathf.Round(module.GetNeedyTimeRemaining()).ToString();
         if (timeNow != "0")
         {
-            Debug.LogFormat("[Red Light Green Light #{0}] Pressed the button with {1} seconds remaining, that is incorrect. Strike!", moduleId, timeNow);
+            Debug.LogFormat("[Patience #{0}] Pressed the button with {1} seconds remaining, that is incorrect. Strike!", moduleId, timeNow);
             module.OnStrike();
         }
         else
         {
-            Debug.LogFormat("[Red Light Green Light #{0}] Pressed the button with 0 seconds remaining, that is correct. Module temporarily neutralized!", moduleId);
+            Debug.LogFormat("[Patience #{0}] Pressed the button with 0 seconds remaining, that is correct. Module temporarily neutralized!", moduleId);
             OnNeedyDeactivation();
             module.OnPass();
         }
