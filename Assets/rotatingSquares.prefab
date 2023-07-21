@@ -2823,6 +2823,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownTime: 30
+  ResetDelayMin: 45
+  ResetDelayMax: 60
   ModuleType: rotatingSquares
   ModuleDisplayName: Rotating Squares
   RequiresTimerVisibility: 0

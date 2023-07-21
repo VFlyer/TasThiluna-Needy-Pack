@@ -1119,6 +1119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownTime: 40
+  ResetDelayMin: 30
+  ResetDelayMax: 45
   ModuleType: patience
   ModuleDisplayName: Patience
   RequiresTimerVisibility: 0

@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 114845433708897022}
   - component: {fileID: 114712797181976816}
   - component: {fileID: 114136771185965284}
-  - component: {fileID: 114414245016031826}
+  - component: {fileID: 114792778939630754}
   m_Layer: 0
   m_Name: simonStashes
   m_TagString: Untagged
@@ -1197,7 +1197,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1384346309138466}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1233,7 +1233,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1553493712462966}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1269,7 +1269,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153498819889362}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1305,7 +1305,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1994976844017454}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1341,7 +1341,7 @@ Light:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1285237769410990}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1461,6 +1461,9 @@ MonoBehaviour:
   - {fileID: 23052922340779970}
   - {fileID: 23522908057837420}
   - {fileID: 23400895506355192}
+  usedMats:
+  - {fileID: 2100000, guid: 57c33143bc2a1c84d9177694ad1fa2b1, type: 2}
+  - {fileID: 2100000, guid: 75c111ce8bb60cd459bc68bd7cb7c926, type: 2}
   colors:
   - {r: 0.78431374, g: 0.078431375, b: 0.078431375, a: 1}
   - {r: 0.078431375, g: 0.78431374, b: 0.078431375, a: 1}
@@ -1567,18 +1570,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Outline
---- !u!114 &114414245016031826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1954350148131442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cadefbb4e8c0c743893b8a7efee5ac5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _colorblindMode: 1
 --- !u!114 &114460692093318408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1761,7 +1752,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 114969116570441408}
   - {fileID: 0}
-  - {fileID: 114656191369470108}
+  - {fileID: 114966020484272062}
   IsPassThrough: 0
   ChildRowLength: 3
   Highlight: {fileID: 114481041003132964}
@@ -1784,6 +1775,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Outline
+--- !u!114 &114792778939630754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1954350148131442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cfb889a07d5fd4e9baed7960bb397f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colorblindMode: 0
 --- !u!114 &114845433708897022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1796,6 +1799,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownTime: 80
+  ResetDelayMin: 60
+  ResetDelayMax: 90
   ModuleType: simonStashes
   ModuleDisplayName: Simon Stashes
   RequiresTimerVisibility: 0

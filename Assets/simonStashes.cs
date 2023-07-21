@@ -15,6 +15,7 @@ public class simonStashes : MonoBehaviour
     public KMSelectable centerButton;
     public KMSelectable[] buttons;
     public Renderer[] buttonRenders;
+    public Material[] usedMats;
     public Color[] colors;
     public Color[] litColors;
     public Color gray;
@@ -156,15 +157,19 @@ public class simonStashes : MonoBehaviour
         centerButton.GetComponent<Renderer>().material.color = gray;
         yield return new WaitForSeconds(.4f);
         buttonLights[color1].enabled = true;
+        buttonRenders[color1].material = usedMats[1];
         buttonRenders[color1].material.color = litColors[colorsPresent[color1]];
         yield return new WaitForSeconds(.4f);
         buttonLights[color1].enabled = false;
+        buttonRenders[color1].material = usedMats[0];
         buttonRenders[color1].material.color = colors[colorsPresent[color1]];
         yield return new WaitForSeconds(.4f);
         buttonLights[color2].enabled = true;
+        buttonRenders[color2].material = usedMats[1];
         buttonRenders[color2].material.color = litColors[colorsPresent[color2]];
         yield return new WaitForSeconds(.4f);
         buttonLights[color2].enabled = false;
+        buttonRenders[color2].material = usedMats[0];
         buttonRenders[color2].material.color = colors[colorsPresent[color2]];
         yield return new WaitForSeconds(.4f);
         goto resetSequence;
@@ -176,6 +181,8 @@ public class simonStashes : MonoBehaviour
         if (flashing != null)
         {
             StopCoroutine(flashing);
+            buttonRenders[color1].material = usedMats[0];
+            buttonRenders[color2].material = usedMats[0];
             flashing = null;
         }
         centerLight.enabled = false;
@@ -212,6 +219,8 @@ public class simonStashes : MonoBehaviour
             if (flashing != null)
             {
                 StopCoroutine(flashing);
+                buttonRenders[color1].material = usedMats[0];
+                buttonRenders[color2].material = usedMats[0];
                 flashing = null;
             }
             for (int i = 0; i < 4; i++)
@@ -242,8 +251,10 @@ public class simonStashes : MonoBehaviour
             for (int j = 0; j < 4; j++)
             {
                 buttonLights[j].enabled = true;
+                buttonRenders[j].material = usedMats[1];
                 buttonRenders[j].material.color = litColors[colorsPresent[j]];
                 yield return new WaitForSeconds(.125f);
+                buttonRenders[j].material = usedMats[0];
                 buttonLights[j].enabled = false;
                 buttonRenders[j].material.color = colors[colorsPresent[j]];
             }
@@ -276,6 +287,7 @@ public class simonStashes : MonoBehaviour
         centerButton.GetComponent<Renderer>().material.color = gray;
         selected[ix] = true;
         buttonLights[ix].enabled = true;
+        buttonRenders[ix].material = usedMats[1];
         buttonRenders[ix].material.color = litColors[colorsPresent[ix]];
         pressedCount++;
         audio.PlaySoundAtTransform("ButtonPress" + pressedCount, button.transform);

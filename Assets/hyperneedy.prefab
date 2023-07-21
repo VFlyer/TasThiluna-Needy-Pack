@@ -3107,6 +3107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownTime: 60
+  ResetDelayMin: 45
+  ResetDelayMax: 60
   ModuleType: hyperneedy
   ModuleDisplayName: Hyperneedy
   RequiresTimerVisibility: 0

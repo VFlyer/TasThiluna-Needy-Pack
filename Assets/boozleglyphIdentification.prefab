@@ -1360,6 +1360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownTime: 90
+  ResetDelayMin: 70
+  ResetDelayMax: 90
   ModuleType: boozleglyphIdentification
   ModuleDisplayName: Boozleglyph Identification
   RequiresTimerVisibility: 0
