@@ -203,7 +203,7 @@ public class simonStashes : MonoBehaviour
     {
         if (active)
         {
-            module.OnStrike();
+            module.HandleStrike();
             OnNeedyDeactivation();
         }
     }
@@ -244,6 +244,7 @@ public class simonStashes : MonoBehaviour
 
     private IEnumerator Submit(bool correct)
     {
+        active = false;
         audio.PlaySoundAtTransform("InputCheck", centerButton.transform);
         autosolveInteract = false;
         for (int i = 0; i < 4; i++)
@@ -266,12 +267,13 @@ public class simonStashes : MonoBehaviour
         }
         if (!correct)
         {
-            module.OnStrike();
-            module.OnPass();
+            Debug.LogFormat("[Simon Stashes #{0}] Submitted incorrect binary: {1}", moduleId, selected.Select(a => a ? '1' : '0').Join(""));
+            module.HandleStrike();
+            module.HandlePass();
         }
         else
         {
-            module.OnPass();
+            module.HandlePass();
             yield return new WaitForSeconds(.1f);
             audio.PlaySoundAtTransform("InputCorrect", centerButton.transform);
         }
@@ -295,28 +297,37 @@ public class simonStashes : MonoBehaviour
 
     // Twitch Plays
 #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} <1/2/3/4> [Presses those colored buttons, starting from the top-right and counting clockwise. Can be chained, i.e. ''!{0} press 134'.] !{0} center [Presses the gray button.]";
+    private readonly string TwitchHelpMessage = "\"!{0} <1/2/3/4>\" [Presses those colored buttons, starting from the top-right and counting clockwise. Multiples can be chained, i.e. \"!{0} 134\".] | \"!{0} center/submit/gray/grey/a\" [Presses the gray button.] | Mentioned commands can be chained by spacing out the presses, i.e. \"!{0} center 134 a\"";
     private bool autosolveInteract;
 #pragma warning restore 414
 
     private IEnumerator ProcessTwitchCommand(string cmd)
     {
-        if (cmd.Trim().All(x => "1234".Contains(x)))
+        var selectablesAll = new List<KMSelectable>();
+        var centerPressOptions = new string[] { "c", "gray", "grey", "center", "centre", "middle", "submit", "enter", "a" };
+        var intCmd = cmd.Trim();
+        foreach (var cmdPortion in intCmd.Split())
         {
-            yield return null;
-            for (int i = 0; i < cmd.Length; i++)
+            if (cmdPortion.All(x => "1234".Contains(x)))
             {
-                buttons[Int32.Parse(cmd[i].ToString()) - 1].OnInteract();
-                yield return new WaitForSeconds(.1f);
+                yield return null;
+                for (int i = 0; i < cmdPortion.Length; i++)
+                    selectablesAll.Add(buttons[int.Parse(cmdPortion[i].ToString()) - 1]);
             }
+            else if (centerPressOptions.Contains(cmdPortion.ToLowerInvariant()))
+            {
+                selectablesAll.Add(centerButton);
+            }
+            else
+                yield break;
         }
-        else if (new string[] { "c", "gray", "grey", "center", "centre", "middle", "submit", "enter" }.Contains(cmd.Trim().ToLowerInvariant()))
-        {
+        if (selectablesAll.Any())
             yield return null;
-            centerButton.OnInteract();
+        foreach (var selectable in selectablesAll)
+        {
+            selectable.OnInteract();
+            yield return new WaitForSeconds(.1f);
         }
-        else
-            yield break;
     }
 
     private void TwitchHandleForcedSolve()
