@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ModConfig
   m_EditorClassIdentifier: 
   id: tasNeedies
-  title: TasThing's Needy Pack
-  author: TasThing
+  title: TasThiluna's Needy Pack
+  author: TasThiluna
   description: "Word Scramble not included.\r\n\r\nThis pack contains 5 needy modules:\r\n\u2022
     Patience\r\n\u2022 Rotating Squares\r\n\u2022 Hyperneedy\r\n\u2022 Boozleglyph
     Identification\r\n\u2022 Simon Stashes\r\n\r\nPatience idea by Pruz, Rotating
