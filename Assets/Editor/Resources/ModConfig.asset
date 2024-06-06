@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Name: ModConfig
   m_EditorClassIdentifier: 
   id: tasNeedies
-  title: TasThing's Needy Pack
-  author: TasThing
-  description: "Word Scramble not included.\r\n\r\nThis pack contains 5 needy modules:\r\n\u2022
+  title: TasThing's Needy Pack [TEMP REUPLOAD]
+  author: TasThing, VFlyer
+  description: "Word Scramble not included.\r\n[b]This is a reupload of an original
+    pack by the respective author. Please unsubscribe/disable the original mod [url=https://steamcommunity.com/sharedfiles/filedetails/?id=1974393045]here[/url]
+    until the original version is fixed.[/b]\r\n\nThis pack contains 5 needy modules:\r\n\u2022
     Patience\r\n\u2022 Rotating Squares\r\n\u2022 Hyperneedy\r\n\u2022 Boozleglyph
     Identification\r\n\u2022 Simon Stashes\r\n\r\nPatience idea by Pruz, Rotating
     Squares idea by Kusane, all other ideas and implementation by TasThiluna.\r\n\r\nManuals
