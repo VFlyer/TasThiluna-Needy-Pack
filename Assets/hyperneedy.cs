@@ -114,7 +114,7 @@ public class hyperneedy : MonoBehaviour
         }
         if (enteringStage == 2)
         {
-            Debug.LogFormat("[Hyperneedy #{0}] Pressed the button {1}, that is correct. Module temporarily neutralized!", moduleId, axisButton.GetComponentInChildren<TextMesh>().text);
+            Debug.LogFormat("[Hyperneedy #{0}] Module temporarily neutralized!", moduleId);
             module.OnPass();
             OnNeedyDeactivation();
         }
